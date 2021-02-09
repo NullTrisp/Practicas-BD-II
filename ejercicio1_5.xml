@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<árboles>
+    <árbol>
+        <nombre></nombre>
+        <vegetación></vegetación>
+        <altura></altura>
+        <forma></forma>
+        <color></color>
+        <resistencia></resistencia>
+    </árbol>
+    <árbol>
+        <nombre></nombre>
+        <vegetación></vegetación>
+        <altura></altura>
+        <forma></forma>
+        <color></color>
+        <resistencia></resistencia>
+    </árbol>
+    <árbol>
+        <nombre></nombre>
+        <vegetación></vegetación>
+        <altura></altura>
+        <forma></forma>
+        <color></color>
+        <resistencia></resistencia>
+    </árbol>
+    <árbol>
+        <nombre></nombre>
+        <vegetación></vegetación>
+        <altura></altura>
+        <forma></forma>
+        <color></color>
+        <resistencia></resistencia>
+    </árbol>
+    <árbol>
+        <nombre></nombre>
+        <vegetación></vegetación>
+        <altura></altura>
+        <forma></forma>
+        <color></color>
+        <resistencia></resistencia>
+    </árbol>
+</árboles>
