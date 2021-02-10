@@ -1,43 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <árboles>
     <árbol>
-        <nombre></nombre>
-        <vegetación></vegetación>
-        <altura></altura>
-        <forma></forma>
-        <color></color>
-        <resistencia></resistencia>
+        <nombre_común>Arce de Montpellier, Arce menor</nombre_común>
+        <vegetación>Caducifolio</vegetación>
+        <altura>De 6 a 10 metros</altura>
+        <forma>Copa esférica. Tronco principal recto con bifurcaciones. Ramaje colgante</forma>
+        <color>
+            <primavera>Haz verde brillante, envés verde blanquecino</primavera>
+        </color>
+        <resistencia>Heladas fuertes (hasta -15ºC)</resistencia>
     </árbol>
     <árbol>
-        <nombre></nombre>
-        <vegetación></vegetación>
-        <altura></altura>
-        <forma></forma>
-        <color></color>
-        <resistencia></resistencia>
+        <nombre_común>Olivo</nombre_común>
+        <vegetación>Perenne</vegetación>
+        <altura>De 8 a 15 metros</altura>
+        <forma>Copa irregular. Tronco principal irregular con bifurcaciones</forma>
     </árbol>
     <árbol>
-        <nombre></nombre>
-        <vegetación></vegetación>
-        <altura></altura>
-        <forma></forma>
-        <color></color>
-        <resistencia></resistencia>
+        <nombre_común>Ramaje tortuoso</nombre_común>
+        <color>Haz verde oscuro, envés verde plateado</color>
+        <resistencia>Heladas medias (hasta -10ºC)</resistencia>
     </árbol>
     <árbol>
-        <nombre></nombre>
-        <vegetación></vegetación>
-        <altura></altura>
-        <forma></forma>
-        <color></color>
-        <resistencia></resistencia>
+        <nombre_común>Platano</nombre_común>
+        <vegetación>Caducifolio</vegetación>
+        <altura>De 20 a 25 metros</altura>
+        <forma>Copa ovoidal. Tronco principal recto. Ramaje expandido</forma>
+        <color>
+            <primavera>
+                Haz verde medio, enves verde claro
+            </primavera>
+            <otoño>
+                Ocre
+            </otoño>
+        </color>
+        <resistencia>Heladas fuertes (hasta -20ºC)</resistencia>
     </árbol>
     <árbol>
-        <nombre></nombre>
-        <vegetación></vegetación>
-        <altura></altura>
-        <forma></forma>
-        <color></color>
-        <resistencia></resistencia>
+        <nombre_común>Encina</nombre_común>
+        <vegetación>Perenne</vegetación>
+        <altura>En torno a 25 metros</altura>
+        <forma>Copa esférica o elíptica irregular. Tronco principal recto. Ramaje tortuoso</forma>
+        <color>
+            <primavera>
+            Plateado en hojas jóvenes. En hojas antiguas, haz verde oscuro, envés plateado
+        </primavera>
+        </color>
+        <resistencia>Heladas fuertes (hasta -15ºC)</resistencia>
     </árbol>
 </árboles>
