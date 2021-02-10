@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cartelera>
+    <pelicula>
+        <titulo_doblado>
+            AQUELLAS JUERGAS UNIVERSITARIA
+        </titulo_doblado>
+        <titulo_original>
+            ’Old School’. EE UU, 2003 93min.
+        </titulo_original>
+        <director>
+            Todd Phillips
+        </director>
+        <intérpretes>
+            Will Ferrell, Luke Wilson, Vince Vaughn, Jeremy Piven, Juliette Lewis, Sean William Scott.
+        </intérpretes>
+        <sinopsis>
+            Mitch, Frank y Beanie son tres amigos treintañeros cuyas vidas no son exactamente lo que esperaban. Mitch tiene una novia ninfómana que se mete en la cama con el primero que agarra. Frank se ha casado y su matrimonio nada tiene que ver con las juergas salvajes que organizaban años atrás. Y Beanie es un padre de familia que se muere por recuperar su alocada juventud. Pero las cosas cambian cuando Beanie sugiere que creen su propia fraternidad, en la nueva casa que Mitch tiene junto al campus de la universidad. Una ocasión para revivir tiempos gloriosos, hacer nuevos amigos y de volver a sus viejas, salvajes y desmadradas juergas de estudiantes.
+        </sinopsis>
+        <url>
+            http://www.oldschool-themovie.com/
+        </url>
+        <genero>
+            Comedia autorizada para mayores de 16 años
+        </genero>
+    </pelicula>
+</cartelera>
