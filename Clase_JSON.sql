@@ -52,13 +52,21 @@ VALUES(2,
 -- EXTRACT
 SELECT JSON_EXTRACT(columna_JSON_1, '$.a.b') AS b_Value FROM test_json WHERE id = 1;
 SELECT JSON_EXTRACT(columna_JSON_2, '$[0].name') AS json_value FROM test_json WHERE id = 2;
+SELECT JSON_EXTRACT(columna_JSON_3, '$[0].title') AS json_value FROM test_json WHERE id = 2;
+SELECT JSON_EXTRACT(columna_JSON_2, '$.padre') AS json_value FROM test_json WHERE id = 1;
 -- REPLACE
 UPDATE test_json SET columna_JSON_2 = JSON_REPLACE(columna_JSON_2, '$.padre[1].hijo', 'Alejandro') WHERE id = 1;
+UPDATE test_json SET columna_JSON_3 = JSON_REPLACE(columna_JSON_3, '$.employees.employee[1].id', '10') WHERE id = 1;
 UPDATE test_json SET columna_JSON_3 = JSON_REPLACE(columna_JSON_3, '$[2].description', "Don\'t forget the ones in the garden and the backyard!") WHERE id = 2;
+UPDATE test_json SET columna_JSON_2 = JSON_REPLACE(columna_JSON_2, '$[0].name', "Pietro Kovanof") WHERE id = 2;
 -- REMOVE
 UPDATE test_json SET columna_JSON_3 = JSON_REMOVE(columna_JSON_3, '$.employees.employee[1]') WHERE id = 1;
 UPDATE test_json SET columna_JSON_3 = JSON_REMOVE(columna_JSON_3, '$[1]') WHERE id = 2;
+UPDATE test_json SET columna_JSON_2 = JSON_REMOVE(columna_JSON_2, '$[0]') WHERE id = 2;
+UPDATE test_json SET columna_JSON_1 = JSON_REMOVE(columna_JSON_1, '$.a.b') WHERE id = 1;
 -- INSERT
 SELECT JSON_INSERT(columna_JSON_1, '$.u', '"3"') FROM test_json WHERE id = 1;
-SELECT id, JSON_INSERT(columna_JSON_2, '$.padre[2]', '""hijo": "Andrea""') FROM test_json WHERE id = 1;
+SELECT JSON_INSERT(columna_JSON_2, '$.padre[2]', '""hijo": "Andrea""') FROM test_json WHERE id = 1;
+SELECT JSON_INSERT(columna_JSON_1, '$.a.c', '2') FROM test_json WHERE id = 1;
+UPDATE test_json SET columna_JSON_3 = (SELECT JSON_INSERT(columna_JSON_3, '$.employees.employee[3]', '{id: 5, firstName: Albert, lastName: Camus}') FROM test_json WHERE id = 1) WHERE id = 1;
 
