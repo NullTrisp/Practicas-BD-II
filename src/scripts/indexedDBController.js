@@ -43,35 +43,33 @@ window.addEventListener("load", function () {
     event.target.result.createObjectStore("users", { keyPath: "username" });
   };
 
-  if (document.getElementById("register-btn")) {
-    /**
-     * Register users function
-     */
-    document.getElementById("register-btn").addEventListener("click", () => {
-      const transaction = db
-        .transaction("users", "readwrite")
-        .objectStore("users")
-        .add({
-          username: document.getElementById("username").value,
-          password: stringToHash(document.getElementById("password").value),
-        });
+  /**
+   * Register users function
+   */
+  document.getElementById("register-btn")?.addEventListener("click", () => {
+    const transaction = db
+      .transaction("users", "readwrite")
+      .objectStore("users")
+      .add({
+        username: document.getElementById("username").value,
+        password: stringToHash(document.getElementById("password").value),
+      });
 
-      transaction.onsuccess = (event) => {
-        alert(event.target.result + " succesfully added!");
-      };
+    transaction.onsuccess = (event) => {
+      alert(event.target.result + " succesfully added!");
+    };
 
-      transaction.onerror = (event) => {
-        alert(event.srcElement.error.message);
-      };
+    transaction.onerror = (event) => {
+      alert(event.srcElement.error.message);
+    };
 
-      clearForm();
-    });
-  }
+    clearForm();
+  });
 
   /**
    * Login user
    */
-  document.getElementById("login-btn").addEventListener("click", () => {
+  document.getElementById("login-btn")?.addEventListener("click", () => {
     const req = db
       .transaction("users")
       .objectStore("users")
@@ -84,12 +82,14 @@ window.addEventListener("load", function () {
     req.onsuccess = (event) => {
       // Do something with the request.result!
       if (
-        req.result.password ===
+        req.result?.password ===
         stringToHash(document.getElementById("password").value)
       ) {
-        alert(
-          "Name: " + req.result.username + ", Password: " + req.result.password
+        localStorage.setItem(
+          "userInSession",
+          document.getElementById("username").value
         );
+        window.location = "../views/view-user.html";
       } else {
         alert("Incorrect credentials!");
       }
