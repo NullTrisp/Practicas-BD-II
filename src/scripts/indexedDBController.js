@@ -1,6 +1,3 @@
-function setUpController() {
-  
-}
 /**
  * Init config
  */
@@ -46,34 +43,56 @@ window.addEventListener("load", function () {
     event.target.result.createObjectStore("users", { keyPath: "username" });
   };
 
-  /**
-   * Register users function
-   */
-  function registerUser() {
-    const transaction = db
-      .transaction("users", "readwrite")
-      .objectStore("users")
-      .add({
-        username: document.getElementById("username").value,
-        password: stringToHash(document.getElementById("password").value),
-      });
+  if (document.getElementById("register-btn")) {
+    /**
+     * Register users function
+     */
+    document.getElementById("register-btn").addEventListener("click", () => {
+      const transaction = db
+        .transaction("users", "readwrite")
+        .objectStore("users")
+        .add({
+          username: document.getElementById("username").value,
+          password: stringToHash(document.getElementById("password").value),
+        });
 
-    transaction.onsuccess = (event) => {
-      alert(event.target.result + " succesfully added!");
-    };
+      transaction.onsuccess = (event) => {
+        alert(event.target.result + " succesfully added!");
+      };
 
-    transaction.onerror = (event) => {
-      alert(event.srcElement.error.message);
-    };
+      transaction.onerror = (event) => {
+        alert(event.srcElement.error.message);
+      };
 
-    clearForm();
+      clearForm();
+    });
   }
 
   /**
    * Login user
    */
-  function loginUser() {
-    const req = db.transaction("users").objectStore("users").get();
-    console.log(req);
-  }
+  document.getElementById("login-btn").addEventListener("click", () => {
+    const req = db
+      .transaction("users")
+      .objectStore("users")
+      .get(document.getElementById("username").value);
+
+    req.onerror = (event) => {
+      alert("Unable to retrieve data from database!");
+    };
+
+    req.onsuccess = (event) => {
+      // Do something with the request.result!
+      if (
+        req.result.password ===
+        stringToHash(document.getElementById("password").value)
+      ) {
+        alert(
+          "Name: " + req.result.username + ", Password: " + req.result.password
+        );
+      } else {
+        alert("Incorrect credentials!");
+      }
+    };
+  });
 });
