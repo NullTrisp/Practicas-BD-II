@@ -21,26 +21,61 @@
     <ul id="slide-out" class="sidenav">
       <li>
         <div class="user-view">
-          <div class="background">
-            <img src="" />
-          </div>
-          <a><img class="circle" src="" /></a>
-          <a><span class="white-text name">John Doe</span></a>
-          <a><span class="white-text email">jdandturk@gmail.com</span></a>
+          <a><img class="circle" src="" id="user-image" /></a>
+          <h3 id="user-username"></h3>
         </div>
       </li>
-      <li>
-        <a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a>
-      </li>
-      <li><a href="#!">Second Link</a></li>
       <li><div class="divider"></div></li>
-      <li><a class="subheader">Subheader</a></li>
-      <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+      <li>
+        <a id="notes-btn"><i class="material-icons">notes</i>Notes</a>
+      </li>
+      <li>
+        <a id="images-btn"><i class="material-icons">image</i>Images</a>
+      </li>
+      <li>
+        <a id="videos-btn"><i class="material-icons">play_arrow</i>Videos</a>
+      </li>
+      <li>
+        <a id="audios-btn"><i class="material-icons">headphones</i>Audios</a>
+      </li>
     </ul>
     <a href="" data-target="slide-out" class="sidenav-trigger"
       ><i class="material-icons">menu</i></a
     >
+    <div id="container"></div>
+
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large red">
+        <i class="large material-icons">add</i>
+      </a>
+      <ul>
+        <li id="add-note-btn">
+          <a class="btn-floating red"><i class="material-icons">notes</i></a>
+        </li>
+        <li id="add-image-btn">
+          <a class="btn-floating yellow darken-1"
+            ><i class="material-icons">image</i></a
+          >
+        </li>
+        <li id="add-video-btn">
+          <a class="btn-floating green"
+            ><i class="material-icons">play_arrow</i></a
+          >
+        </li>
+        <li id="add-audio-btn">
+          <a class="btn-floating blue"
+            ><i class="material-icons">headphones</i></a
+          >
+        </li>
+        <li id="logout">
+          <a class="btn-floating brown"
+            ><i class="material-icons">logout</i></a
+          >
+        </li>
+      </ul>
+    </div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="../scripts/userControl.js"></script>
+  <script src="../scripts/view-user-control.js"></script>
+  <script src="../scripts/indexedDBController.js"></script>
 </html>

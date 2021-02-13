@@ -1,7 +1,15 @@
-/**
- * Init config
- */
 window.addEventListener("load", function () {
+  if (
+    window.location.pathname.split("/").pop() !== "index.html" &&
+    window.location.pathname.split("/").pop() !== "view-register.html"
+  ) {
+    if (
+      sessionStorage.getItem("userInSession") === "" ||
+      sessionStorage.getItem("userInSession") === null
+    ) {
+      window.location = "../views/index.html";
+    }
+  }
   /**
    * Checks indexedDB compatibility
    */
@@ -53,6 +61,11 @@ window.addEventListener("load", function () {
       .add({
         username: document.getElementById("username").value,
         password: stringToHash(document.getElementById("password").value),
+        profilePic: null,
+        notes: [{ title: "test", content: "test content" }],
+        images: [],
+        videos: [],
+        audios: [],
       });
 
     transaction.onsuccess = (event) => {
@@ -85,7 +98,7 @@ window.addEventListener("load", function () {
         req.result?.password ===
         stringToHash(document.getElementById("password").value)
       ) {
-        localStorage.setItem(
+        sessionStorage.setItem(
           "userInSession",
           document.getElementById("username").value
         );
@@ -95,4 +108,144 @@ window.addEventListener("load", function () {
       }
     };
   });
+
+  /**
+   * add note
+   */
+  document.getElementById("add-note-btn")?.addEventListener("click", () => {
+    window.location = "../views/view-notes.html";
+  });
+
+  document.getElementById("create-note-btn")?.addEventListener("click", () => {
+    let req = db
+      .transaction("users")
+      .objectStore("users")
+      .get(sessionStorage.getItem("userInSession"));
+
+    req.onerror = (event) => {
+      alert("Unable to retrieve data from database!");
+    };
+
+    req.onsuccess = (event) => {
+      req.result.notes.push({
+        title: document.getElementById("title").value,
+        content: document.getElementById("content").value,
+      });
+      req = db
+        .transaction("users", "readwrite")
+        .objectStore("users")
+        .put(req.result);
+      req.onsuccess() = (event) => {
+        //TODO CEHCK TYPEERROR
+        alert("Note added!");
+      };
+    };
+  });
+
+  /**
+   * add image
+   */
+  document.getElementById("add-image-btn")?.addEventListener("click", () => {
+    window.location = "../views/view-images.html";
+  });
+  document.getElementById("image")?.addEventListener("change", (event) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      document
+        .getElementById("create-image-btn")
+        ?.addEventListener("click", () => {
+          let req = db
+            .transaction("users")
+            .objectStore("users")
+            .get(sessionStorage.getItem("userInSession"));
+
+          req.onerror = (event) => {
+            alert("Unable to retrieve data from database!");
+          };
+
+          req.onsuccess = (event) => {
+            req.result.images.push(reader.result);
+            req = db
+              .transaction("users", "readwrite")
+              .objectStore("users")
+              .put(req.result);
+          };
+        });
+    });
+    reader.readAsDataURL(event.target.files[0]);
+  });
+
+  /**
+   * add video
+   */
+  document.getElementById("add-video-btn")?.addEventListener("click", () => {
+    window.location = "../views/view-videos.html";
+  });
+  document.getElementById("video")?.addEventListener("change", (event) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      document
+        .getElementById("create-video-btn")
+        ?.addEventListener("click", () => {
+          let req = db
+            .transaction("users")
+            .objectStore("users")
+            .get(sessionStorage.getItem("userInSession"));
+
+          req.onerror = (event) => {
+            alert("Unable to retrieve data from database!");
+          };
+
+          req.onsuccess = (event) => {
+            req.result.videos.push(reader.result);
+            req = db
+              .transaction("users", "readwrite")
+              .objectStore("users")
+              .put(req.result);
+          };
+        });
+    });
+    reader.readAsDataURL(event.target.files[0]);
+  });
+
+  /**
+   * add audio
+   */
+  document.getElementById("add-audio-btn")?.addEventListener("click", () => {
+    window.location = "../views/view-audios.html";
+  });
+  document.getElementById("audio")?.addEventListener("change", (event) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      document
+        .getElementById("create-audio-btn")
+        ?.addEventListener("click", () => {
+          let req = db
+            .transaction("users")
+            .objectStore("users")
+            .get(sessionStorage.getItem("userInSession"));
+
+          req.onerror = (event) => {
+            alert("Unable to retrieve data from database!");
+          };
+
+          req.onsuccess = (event) => {
+            req.result.audios.push(reader.result);
+            req = db
+              .transaction("users", "readwrite")
+              .objectStore("users")
+              .put(req.result);
+          };
+        });
+    });
+    reader.readAsDataURL(event.target.files[0]);
+  });
+});
+
+/**
+ * logout
+ */
+document.getElementById("logout")?.addEventListener("click", () => {
+  sessionStorage.removeItem("userInSession");
+  window.location = "../views/index.html";
 });
