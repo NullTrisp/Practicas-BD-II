@@ -52,7 +52,7 @@ window.addEventListener("load", () => {
     req.onsuccess = (event) => {
       let container = document.getElementById("container");
       req.result.notes.forEach((element) => {
-        container.innerHTML += `<div class='row'><div class='col'><div class='card blue-grey'><div class='card-content white-text'><span class='card-title'>${element.title}</span><p>${element.content}</p></div></div></div></div><br>`;
+        container.innerHTML += `<div class='row'><div class='col'><div class='card blue-grey'><div class='card-content white-text'><span class='card-title'>${element.title}</span><p>${element.content}</p></div></div></div></div>`;
       });
     };
   });

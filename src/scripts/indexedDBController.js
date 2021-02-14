@@ -9,6 +9,13 @@ window.addEventListener("load", function () {
     ) {
       window.location = "../views/index.html";
     }
+  } else if (window.location.pathname.split("/").pop() === "index.html") {
+    if (
+      sessionStorage.getItem("userInSession") !== "" ||
+      sessionStorage.getItem("userInSession") !== null
+    ) {
+      window.location = "../views/view-user.html";
+    }
   }
   /**
    * Checks indexedDB compatibility
@@ -93,7 +100,6 @@ window.addEventListener("load", function () {
     };
 
     req.onsuccess = (event) => {
-      // Do something with the request.result!
       if (
         req.result?.password ===
         stringToHash(document.getElementById("password").value)
@@ -107,6 +113,44 @@ window.addEventListener("load", function () {
         alert("Incorrect credentials!");
       }
     };
+  });
+
+  /**
+   * update profile picture
+   */
+  document
+    .getElementById("profilepic-input")
+    ?.addEventListener("change", (event) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        let req = db
+          .transaction("users")
+          .objectStore("users")
+          .get(sessionStorage.getItem("userInSession"));
+
+        req.onerror = (event) => {
+          alert("Unable to retrieve data from database!");
+        };
+
+        req.onsuccess = (event) => {
+          const updatedData = req.result;
+          updatedData.profilePic = reader.result;
+          req = db
+            .transaction("users", "readwrite")
+            .objectStore("users")
+            .put(updatedData);
+          req.onsuccess = () => {
+            alert("Profile pic updated!");
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          };
+        };
+      });
+      reader.readAsDataURL(event.target.files[0]);
+    });
+  document.getElementById("profilepic-btn")?.addEventListener("click", () => {
+    document.getElementById("profilepic-input").click();
   });
 
   /**
@@ -135,10 +179,8 @@ window.addEventListener("load", function () {
         .transaction("users", "readwrite")
         .objectStore("users")
         .put(req.result);
-      req.onsuccess() = (event) => {
-        //TODO CEHCK TYPEERROR
-        alert("Note added!");
-      };
+
+      alert("Note added!");
     };
   });
 
@@ -169,6 +211,7 @@ window.addEventListener("load", function () {
               .transaction("users", "readwrite")
               .objectStore("users")
               .put(req.result);
+            alert("Image added!");
           };
         });
     });
@@ -202,6 +245,7 @@ window.addEventListener("load", function () {
               .transaction("users", "readwrite")
               .objectStore("users")
               .put(req.result);
+            alert("Video added!");
           };
         });
     });
@@ -235,6 +279,7 @@ window.addEventListener("load", function () {
               .transaction("users", "readwrite")
               .objectStore("users")
               .put(req.result);
+            alert("Audio added!");
           };
         });
     });
