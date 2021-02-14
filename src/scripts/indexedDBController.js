@@ -9,13 +9,6 @@ window.addEventListener("load", function () {
     ) {
       window.location = "../views/index.html";
     }
-  } else if (window.location.pathname.split("/").pop() === "index.html") {
-    if (
-      sessionStorage.getItem("userInSession") !== "" ||
-      sessionStorage.getItem("userInSession") !== null
-    ) {
-      window.location = "../views/view-user.html";
-    }
   }
   /**
    * Checks indexedDB compatibility
@@ -90,6 +83,7 @@ window.addEventListener("load", function () {
    * Login user
    */
   document.getElementById("login-btn")?.addEventListener("click", () => {
+    console.log(document.getElementById("remember-me").checked);
     const req = db
       .transaction("users")
       .objectStore("users")
