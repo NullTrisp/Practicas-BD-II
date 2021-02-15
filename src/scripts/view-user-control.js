@@ -10,10 +10,14 @@ window.addEventListener("load", () => {
   };
 
   /**
+  * user in session 
+  */
+  const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
+
+  /**
    * render user data
    */
   req.onsuccess = (event) => {
-    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     db = req.result;
     const userData = db
       .transaction("users")
@@ -34,7 +38,6 @@ window.addEventListener("load", () => {
    * Left nav bar
    */
   const navBarInstance = M.Sidenav.init(document.querySelector(".sidenav"));
-  navBarInstance.open();
 
   /**
    * floating icon
@@ -46,16 +49,17 @@ window.addEventListener("load", () => {
    */
   document.getElementById("notes-btn")?.addEventListener("click", () => {
     document.getElementById("container").innerHTML = "";
-    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     const req = db
       .transaction("users")
       .objectStore("users")
       .get(userInSession);
     req.onsuccess = (event) => {
       let container = document.getElementById("container");
+      container.innerHTML = `<div id="page-header"><h1>Notes:</h1></div><br/>`;
       req.result.notes.forEach((element) => {
         container.innerHTML += `<div class='row'><div class='col'><div class='card blue-grey'><div class='card-content white-text'><span class='card-title'>${element.title}</span><p>${element.content}</p></div></div></div></div>`;
       });
+      navBarInstance.close();
     };
   });
 
@@ -64,16 +68,17 @@ window.addEventListener("load", () => {
    */
   document.getElementById("images-btn")?.addEventListener("click", () => {
     document.getElementById("container").innerHTML = "";
-    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     const req = db
       .transaction("users")
       .objectStore("users")
       .get(userInSession);
     req.onsuccess = (event) => {
       let container = document.getElementById("container");
+      container.innerHTML = `<div id="page-header"><h1>Images:</h1></div><br/>`;
       req.result.images.forEach((element) => {
         container.innerHTML += `<div class='row'><div class='col'><div class='card blue-grey'><div class='card-content white-text'><img src=${element}></div></div></div></div><br>`;
       });
+      navBarInstance.close();
     };
   });
 
@@ -82,16 +87,17 @@ window.addEventListener("load", () => {
    */
   document.getElementById("videos-btn")?.addEventListener("click", () => {
     document.getElementById("container").innerHTML = "";
-    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     const req = db
       .transaction("users")
       .objectStore("users")
       .get(userInSession);
     req.onsuccess = (event) => {
       let container = document.getElementById("container");
+      container.innerHTML = `<div id="page-header"><h1>Videos:</h1></div><br/>`;
       req.result.videos.forEach((element) => {
         container.innerHTML += `<div class='row'><div class='col'><div class='card blue-grey'><div class='card-content white-text'><video controls width="250"><source src=${element}></video></div></div></div></div><br>`;
       });
+      navBarInstance.close();
     };
   });
 
@@ -100,16 +106,17 @@ window.addEventListener("load", () => {
    */
   document.getElementById("audios-btn")?.addEventListener("click", () => {
     document.getElementById("container").innerHTML = "";
-    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     const req = db
       .transaction("users")
       .objectStore("users")
       .get(userInSession);
     req.onsuccess = (event) => {
       let container = document.getElementById("container");
+      container.innerHTML = `<div id="page-header"><h1>Audios:</h1></div><br/>`;
       req.result.audios.forEach((element) => {
         container.innerHTML += `<div class='row'><div class='col'><div class='card blue-grey'><div class='card-content white-text'><audio controls><source src=${element}></audio></div></div></div></div><br>`;
       });
+      navBarInstance.close();
     };
   });
 });

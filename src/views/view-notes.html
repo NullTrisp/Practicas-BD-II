@@ -1,65 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--Import Google Icon Font-->
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <!-- Compiled and minified CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <link rel="stylesheet" href="../styles/styles.css" type="text/css" />
-    <title>Add Note</title>
-  </head>
-  <body>
-    <br />
-    <br />
-    <br />
 
-    <div class="row">
-      <div class="col" id="form">
-        <div class="row">
-          <div class="input-field col s12">
-            <i class="material-icons prefix">title</i>
-            <textarea
-              id="title"
-              style="resize: none"
-              class="validate"
-            ></textarea>
-            <label for="title">Title</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <i class="material-icons prefix">note</i>
-            <textarea
-              id="content"
-              style="resize: none"
-              class="validate"
-            ></textarea>
-            <label for="content">Note content</label>
-          </div>
-        </div>
-        <div class="row">
-          <button
-            class="waves-effect waves-light btn primary-btn"
-            id="create-note-btn"
-          >
-            Create Note
-          </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link rel="stylesheet" href="../styles/styles.css" type="text/css" />
+  <title>Add Note</title>
+</head>
+
+<body>
+  <br />
+  <br />
+  <br />
+  
+  <div id="page-header">
+    <h1>Create note</h1>
+  </div>
+  <br />
+  <br />
+
+  <div class="row">
+    <div class="col" id="form">
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">title</i>
+          <textarea id="title" style="resize: none" class="validate"></textarea>
+          <label for="title">Title</label>
         </div>
       </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">note</i>
+          <textarea id="content" style="resize: none" class="validate"></textarea>
+          <label for="content">Note content</label>
+        </div>
+      </div>
+      <div class="row">
+        <button class="waves-effect waves-light btn primary-btn" id="create-note-btn">
+          Create Note
+        </button>
+      </div>
     </div>
+  </div>
 
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="../scripts/indexedDBController.js"></script>
-    <script src="../scripts/lib.js"></script>
-  </body>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="../scripts/indexedDBController.js"></script>
+  <script src="../scripts/lib.js"></script>
+</body>
+
 </html>
