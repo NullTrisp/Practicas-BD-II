@@ -54,6 +54,11 @@ window.addEventListener("load", function () {
   };
 
   /**
+  * user in session 
+  */
+  const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
+
+  /**
    * Creating users "table"
    */
   req.onupgradeneeded = (event) => {
@@ -156,7 +161,7 @@ window.addEventListener("load", function () {
         let req = db
           .transaction("users")
           .objectStore("users")
-          .get(sessionStorage.getItem("userInSession"));
+          .get(userInSession);
 
         req.onerror = (event) => {
           alert("Unable to retrieve data from database!");
@@ -194,7 +199,7 @@ window.addEventListener("load", function () {
     let req = db
       .transaction("users")
       .objectStore("users")
-      .get(sessionStorage.getItem("userInSession"));
+      .get(userInSession);
 
     req.onerror = (event) => {
       alert("Unable to retrieve data from database!");
@@ -210,6 +215,8 @@ window.addEventListener("load", function () {
         .objectStore("users")
         .put(req.result);
 
+      document.getElementById("title").value = "";
+      document.getElementById("content").value = "";
       alert("Note added!");
     };
   });
@@ -229,7 +236,7 @@ window.addEventListener("load", function () {
           let req = db
             .transaction("users")
             .objectStore("users")
-            .get(sessionStorage.getItem("userInSession"));
+            .get(userInSession);
 
           req.onerror = (event) => {
             alert("Unable to retrieve data from database!");
@@ -263,7 +270,7 @@ window.addEventListener("load", function () {
           let req = db
             .transaction("users")
             .objectStore("users")
-            .get(sessionStorage.getItem("userInSession"));
+            .get(userInSession);
 
           req.onerror = (event) => {
             alert("Unable to retrieve data from database!");
@@ -297,7 +304,7 @@ window.addEventListener("load", function () {
           let req = db
             .transaction("users")
             .objectStore("users")
-            .get(sessionStorage.getItem("userInSession"));
+            .get(userInSession);
 
           req.onerror = (event) => {
             alert("Unable to retrieve data from database!");
