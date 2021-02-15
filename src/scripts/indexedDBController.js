@@ -3,11 +3,20 @@ window.addEventListener("load", function () {
     window.location.pathname.split("/").pop() !== "index.html" &&
     window.location.pathname.split("/").pop() !== "view-register.html"
   ) {
-    if (
-      sessionStorage.getItem("userInSession") === "" ||
-      sessionStorage.getItem("userInSession") === null
-    ) {
-      window.location = "../views/index.html";
+    if (localStorage.getItem("remember") === "true") {
+      if (
+        localStorage.getItem("userInSession") === "" ||
+        localStorage.getItem("userInSession") === null
+      ) {
+        window.location = "../views/index.html";
+      }
+    } else {
+      if (
+        sessionStorage.getItem("userInSession") === "" ||
+        sessionStorage.getItem("userInSession") === null
+      ) {
+        window.location = "../views/index.html";
+      }
     }
   }
   /**
@@ -62,7 +71,7 @@ window.addEventListener("load", function () {
         username: document.getElementById("username").value,
         password: stringToHash(document.getElementById("password").value),
         profilePic: null,
-        notes: [{ title: "test", content: "test content" }],
+        notes: [],
         images: [],
         videos: [],
         audios: [],
@@ -83,30 +92,57 @@ window.addEventListener("load", function () {
    * Login user
    */
   document.getElementById("login-btn")?.addEventListener("click", () => {
-    console.log(document.getElementById("remember-me").checked);
-    const req = db
-      .transaction("users")
-      .objectStore("users")
-      .get(document.getElementById("username").value);
+    if (document.getElementById("remember-me").checked) {
+      localStorage.setItem("remember", true);
+      const req = db
+        .transaction("users")
+        .objectStore("users")
+        .get(document.getElementById("username").value);
 
-    req.onerror = (event) => {
-      alert("Unable to retrieve data from database!");
-    };
+      req.onerror = (event) => {
+        alert("Unable to retrieve data from database!");
+      };
 
-    req.onsuccess = (event) => {
-      if (
-        req.result?.password ===
-        stringToHash(document.getElementById("password").value)
-      ) {
-        sessionStorage.setItem(
-          "userInSession",
-          document.getElementById("username").value
-        );
-        window.location = "../views/view-user.html";
-      } else {
-        alert("Incorrect credentials!");
-      }
-    };
+      req.onsuccess = (event) => {
+        if (
+          req.result?.password ===
+          stringToHash(document.getElementById("password").value)
+        ) {
+          localStorage.setItem(
+            "userInSession",
+            document.getElementById("username").value
+          );
+          window.location = "../views/view-user.html";
+        } else {
+          alert("Incorrect credentials!");
+        }
+      };
+    } else {
+      localStorage.setItem("remember", false);
+      const req = db
+        .transaction("users")
+        .objectStore("users")
+        .get(document.getElementById("username").value);
+
+      req.onerror = (event) => {
+        alert("Unable to retrieve data from database!");
+      };
+
+      req.onsuccess = (event) => {
+        if (
+          req.result?.password ===
+          stringToHash(document.getElementById("password").value)
+        ) {
+          sessionStorage.setItem(
+            "userInSession",
+            document.getElementById("username").value
+          );
+          window.location = "../views/view-user.html";
+        } else {
+          alert("Incorrect credentials!");
+        }
+      };
+    }
   });
 
   /**
@@ -286,5 +322,7 @@ window.addEventListener("load", function () {
  */
 document.getElementById("logout")?.addEventListener("click", () => {
   sessionStorage.removeItem("userInSession");
+  localStorage.removeItem("userInSession");
+  localStorage.setItem("remember", false);
   window.location = "../views/index.html";
 });

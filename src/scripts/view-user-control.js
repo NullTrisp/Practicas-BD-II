@@ -13,11 +13,12 @@ window.addEventListener("load", () => {
    * render user data
    */
   req.onsuccess = (event) => {
+    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     db = req.result;
     const userData = db
       .transaction("users")
       .objectStore("users")
-      .get(sessionStorage.getItem("userInSession"));
+      .get(userInSession);
     userData.onsuccess = (event) => {
       document.getElementById("user-username").innerHTML =
         userData.result.username;
@@ -45,10 +46,11 @@ window.addEventListener("load", () => {
    */
   document.getElementById("notes-btn")?.addEventListener("click", () => {
     document.getElementById("container").innerHTML = "";
+    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     const req = db
       .transaction("users")
       .objectStore("users")
-      .get(sessionStorage.getItem("userInSession"));
+      .get(userInSession);
     req.onsuccess = (event) => {
       let container = document.getElementById("container");
       req.result.notes.forEach((element) => {
@@ -62,10 +64,11 @@ window.addEventListener("load", () => {
    */
   document.getElementById("images-btn")?.addEventListener("click", () => {
     document.getElementById("container").innerHTML = "";
+    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     const req = db
       .transaction("users")
       .objectStore("users")
-      .get(sessionStorage.getItem("userInSession"));
+      .get(userInSession);
     req.onsuccess = (event) => {
       let container = document.getElementById("container");
       req.result.images.forEach((element) => {
@@ -79,10 +82,11 @@ window.addEventListener("load", () => {
    */
   document.getElementById("videos-btn")?.addEventListener("click", () => {
     document.getElementById("container").innerHTML = "";
+    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     const req = db
       .transaction("users")
       .objectStore("users")
-      .get(sessionStorage.getItem("userInSession"));
+      .get(userInSession);
     req.onsuccess = (event) => {
       let container = document.getElementById("container");
       req.result.videos.forEach((element) => {
@@ -96,10 +100,11 @@ window.addEventListener("load", () => {
    */
   document.getElementById("audios-btn")?.addEventListener("click", () => {
     document.getElementById("container").innerHTML = "";
+    const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
     const req = db
       .transaction("users")
       .objectStore("users")
-      .get(sessionStorage.getItem("userInSession"));
+      .get(userInSession);
     req.onsuccess = (event) => {
       let container = document.getElementById("container");
       req.result.audios.forEach((element) => {
