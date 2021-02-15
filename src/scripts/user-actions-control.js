@@ -69,7 +69,7 @@ window.addEventListener("load", function () {
       .objectStore("users")
       .add({
         username: document.getElementById("username").value,
-        password: stringToHash(document.getElementById("password").value),
+        password: crypt(document.getElementById("password").value),
         profilePic: null,
         notes: [],
         images: [],
@@ -105,8 +105,8 @@ window.addEventListener("load", function () {
 
       req.onsuccess = (event) => {
         if (
-          req.result?.password ===
-          stringToHash(document.getElementById("password").value)
+          decrypt(req.result?.password) ===
+          document.getElementById("password").value
         ) {
           localStorage.setItem(
             "userInSession",
@@ -130,8 +130,8 @@ window.addEventListener("load", function () {
 
       req.onsuccess = (event) => {
         if (
-          req.result?.password ===
-          stringToHash(document.getElementById("password").value)
+          decrypt(req.result?.password) ===
+          document.getElementById("password").value
         ) {
           sessionStorage.setItem(
             "userInSession",
