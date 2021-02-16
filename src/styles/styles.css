@@ -41,3 +41,7 @@ button {
   margin-top: 20px;
   color: rgba(0, 0, 0, 0.671);
 }
+
+.render-btn:hover {
+  cursor: pointer !important;
+}
