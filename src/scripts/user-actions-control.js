@@ -35,7 +35,7 @@ window.addEventListener("load", function () {
       }
     }
   }
-  
+
   /**
    * Checks indexedDB compatibility
    */
@@ -71,9 +71,12 @@ window.addEventListener("load", function () {
   };
 
   /**
-  * user in session 
-  */
-  const userInSession = localStorage.getItem("remember") === "true" ? localStorage.getItem("userInSession") : sessionStorage.getItem("userInSession");
+   * user in session
+   */
+  const userInSession =
+    localStorage.getItem("remember") === "true"
+      ? localStorage.getItem("userInSession")
+      : sessionStorage.getItem("userInSession");
 
   /**
    * Creating users "table"
@@ -213,10 +216,7 @@ window.addEventListener("load", function () {
   });
 
   document.getElementById("create-note-btn")?.addEventListener("click", () => {
-    let req = db
-      .transaction("users")
-      .objectStore("users")
-      .get(userInSession);
+    let req = db.transaction("users").objectStore("users").get(userInSession);
 
     req.onerror = (event) => {
       alert("Unable to retrieve data from database!");
@@ -338,6 +338,23 @@ window.addEventListener("load", function () {
         });
     });
     reader.readAsDataURL(event.target.files[0]);
+  });
+
+  /**
+   * delete user
+   */
+  document.getElementById("delete-user")?.addEventListener("click", () => {
+    let req = db
+      .transaction("users", "readwrite")
+      .objectStore("users")
+      .delete(userInSession);
+    req.onsuccess = () => {
+      alert("User deleted!");
+      sessionStorage.removeItem("userInSession");
+      localStorage.removeItem("userInSession");
+      localStorage.setItem("remember", false);
+      window.location.reload();
+    };
   });
 });
 
