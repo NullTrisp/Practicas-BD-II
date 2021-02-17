@@ -95,7 +95,7 @@ window.addEventListener("load", () => {
       let container = document.getElementById("container");
       container.innerHTML = `<div id="page-header"><h1>Videos:</h1></div><br/>`;
       req.result.videos.forEach((element) => {
-        container.innerHTML += `<div class='row'><div class='col'><div class='card blue-grey'><div class='card-content white-text'><video controls width="250"><source src=${element}></video></div></div></div></div><br>`;
+        container.innerHTML += `<div class='row'><div class='col'><div class='card blue-grey'><div class='card-content white-text'><video controls width="500"><source src=${element}></video></div></div></div></div><br>`;
       });
       navBarInstance.close();
     };
