@@ -18,7 +18,24 @@ window.addEventListener("load", function () {
         window.location = "../views/index.html";
       }
     }
+  } else {
+    if (localStorage.getItem("remember") === "true") {
+      if (
+        localStorage.getItem("userInSession") !== "" &&
+        localStorage.getItem("userInSession") !== null
+      ) {
+        window.location = "../views/view-user.html";
+      }
+    } else {
+      if (
+        sessionStorage.getItem("userInSession") !== "" &&
+        sessionStorage.getItem("userInSession") !== null
+      ) {
+        window.location = "../views/view-user.html";
+      }
+    }
   }
+  
   /**
    * Checks indexedDB compatibility
    */
