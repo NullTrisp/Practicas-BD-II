@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 import datatypes.Account;
@@ -5,7 +6,7 @@ import handlers.DataGenerator;
 
 public class Main {
 	public static void main(String... args) {
-		Scanner in = new Scanner(System.in), inInt = new Scanner(System.in);
+		Scanner in = new Scanner(System.in);
 		String accountNum, pass;
 		DataGenerator dataGenerator = new DataGenerator().generateData();
 		boolean exit = false;
@@ -75,12 +76,61 @@ public class Main {
 							System.out.println("Please input your desired query: ");
 							String queryRes = dataGenerator.executeQuery(in.nextLine());
 							System.out.println("\n" + queryRes + "\n");
-							System.out.println("Do you want to save your query? [y/n]");
-							if (in.next() == "y") {
-
+							System.out.println("Do you want to save your query result? [y/n]");
+							if (in.next().equals("y")) {
+								System.out.println("Do you want to save it in xml or txt? [xml/txt]");
+								String option = in.next();
+								if (option.equals("xml")) {
+									in.nextLine();
+									System.out.println("Input file name: ");
+									dataGenerator.storeQueryXml(queryRes, in.next());
+								} else if (option.equals("txt")) {
+									in.nextLine();
+									System.out.println("Input file name: ");
+									dataGenerator.storeQueryTxt(queryRes, in.next());
+								} else {
+									System.out.println("No valid option detected");
+								}
 							}
 							break;
 						case 2:
+							String[] options = { "[1] -> Get accounts with credit greather than ",
+									"[2] -> Get account data by account number", "[3] -> Get accounts by owner id",
+									"[4] -> Get accounts with credit less than " };
+							System.out.println("Please choose a predefined query to execute: ");
+							for (String option : options) {
+								System.out.println(option);
+							}
+							switch (in.nextInt()) {
+							case 1:
+								in.nextLine();
+								System.out.println("Insert the value: ");
+								System.out.println(
+										dataGenerator.executeQuery("for $x in /bank/accounts/account where $x/credit > "
+												+ in.next() + " return $x"));
+								break;
+							case 2:
+								in.nextLine();
+								System.out.println("Insert the value: ");
+								System.out.println(dataGenerator.executeQuery(
+										"for $x in /bank/accounts/account where $x/@number = '" + in.next()
+												+ "' return concat('owner: ', $x/owner, ' credit: ', $x/credit)"));
+								break;
+							case 3:
+								in.nextLine();
+								System.out.println("Insert the value: ");
+								System.out.println(dataGenerator
+										.executeQuery("/bank/accounts/account[owner = '" + in.next() + "']"));
+								break;
+							case 4:
+								in.nextLine();
+								System.out.println("Insert the value: ");
+								System.out.println(dataGenerator.executeQuery(""));
+								break;
+							default:
+
+								break;
+							}
 							break;
 						case 3:
 							exitUser = !exitUser;

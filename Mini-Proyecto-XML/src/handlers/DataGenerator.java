@@ -62,8 +62,24 @@ public class DataGenerator {
 		return "";
 	}
 
-	public List<Account> getAccounts() {
-		return accounts;
+	public void storeQueryTxt(final String query, final String fileName) {
+		try {
+			FileWriter out = new FileWriter("src/storage/" + fileName + ".txt");
+			out.write(query);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void storeQueryXml(final String query, final String fileName) {
+		try {
+			FileWriter out = new FileWriter("src/storage/" + fileName + ".xml");
+			out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?> <result>" + query + "</result>");
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void closeSession() {

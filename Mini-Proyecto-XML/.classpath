@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/becario/Documents/Practicas-BD-II/Mini-Proyecto-XML/BaseX946.jar"/>
+	<classpathentry kind="lib" path="BaseX946.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
