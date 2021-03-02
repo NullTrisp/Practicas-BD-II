@@ -20,12 +20,8 @@ public class DB {
 		}
 	}
 
-	public DB query(final String query) {
-		try {
-			this.query = new XQuery(query).execute(this.context);
-		} catch (final BaseXException e) {
-			e.printStackTrace();
-		}
+	public DB query(final String query) throws BaseXException {
+		this.query = new XQuery(query).execute(this.context);
 		return this;
 	}
 

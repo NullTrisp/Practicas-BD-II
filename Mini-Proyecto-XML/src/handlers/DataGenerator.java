@@ -4,6 +4,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.basex.core.BaseXException;
+
 import datatypes.Account;
 
 public class DataGenerator {
@@ -16,8 +19,12 @@ public class DataGenerator {
 	}
 
 	public DataGenerator generateData() {
-		this.db.query(
-				"for $x in /bank/accounts/account return concat($x/@number, ',', $x/owner, ',', $x/credit, ',', $x/password)");
+		try {
+			this.db.query(
+					"for $x in /bank/accounts/account return concat($x/@number, ',', $x/owner, ',', $x/credit, ',', $x/password)");
+		} catch (BaseXException e) {
+			e.printStackTrace();
+		}
 		String[] rawAccounts = this.db.getQuery().split("\r\n"), rawData;
 		for (String account : rawAccounts) {
 			rawData = account.split(",");
@@ -35,6 +42,24 @@ public class DataGenerator {
 			}
 		}
 		return found;
+	}
+
+	public boolean loginManager(final String pass) {
+		try {
+			return this.db.query("string(/bank/manager/@password)").getQuery().equals(pass);
+		} catch (BaseXException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public String executeQuery(final String query) {
+		try {
+			return this.db.query(query).getQuery();
+		} catch (BaseXException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	public List<Account> getAccounts() {
@@ -55,7 +80,7 @@ public class DataGenerator {
 						+ " </owner> <credit> " + account.getCredit() + "</credit> <password> " + account.getPassword()
 						+ " </password> </account>";
 			}
-			xml += "</accounts> </bank>";
+			xml += "</accounts> <manager password='1234' /> </bank>";
 			myWriter.write(xml);
 			myWriter.close();
 		} catch (IOException e) {

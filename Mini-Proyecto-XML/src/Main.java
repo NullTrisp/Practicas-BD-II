@@ -5,7 +5,7 @@ import handlers.DataGenerator;
 
 public class Main {
 	public static void main(String... args) {
-		Scanner in = new Scanner(System.in);
+		Scanner in = new Scanner(System.in), inInt = new Scanner(System.in);
 		String accountNum, pass;
 		DataGenerator dataGenerator = new DataGenerator().generateData();
 		boolean exit = false;
@@ -61,6 +61,39 @@ public class Main {
 				}
 				break;
 			case 2:
+				System.out.println("Please enter manager password: ");
+				if (dataGenerator.loginManager(in.next())) {
+					in.nextLine();
+					System.out.println("\nWelcome to the manager panel: ");
+					boolean exitUser = false;
+					while (!exitUser) {
+						System.out.println(
+								"\nSelect the desired option: \n[1] -> Execute custom query \n[2] -> Execute predefined queries \n[3] -> Exit");
+						switch (in.nextInt()) {
+						case 1:
+							in.nextLine();
+							System.out.println("Please input your desired query: ");
+							String queryRes = dataGenerator.executeQuery(in.nextLine());
+							System.out.println("\n" + queryRes + "\n");
+							System.out.println("Do you want to save your query? [y/n]");
+							if (in.next() == "y") {
+
+							}
+							break;
+						case 2:
+							break;
+						case 3:
+							exitUser = !exitUser;
+							System.err.println("\n\n\n\n");
+							break;
+						default:
+							System.err.println("Choose a valid option!");
+							break;
+						}
+					}
+				} else {
+					System.out.println("Incorrect credentials");
+				}
 				break;
 			case 3:
 				exit = !exit;
