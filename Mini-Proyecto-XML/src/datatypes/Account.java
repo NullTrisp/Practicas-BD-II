@@ -4,12 +4,15 @@ public class Account {
 	private String owner;
 	private String number;
 	private String password;
+	private String dni;
 	private double credit;
 
-	public Account(final String number, final String owner, final double credit, final String password) {
+	public Account(final String number, final String owner, final double credit, final String password,
+			final String dni) {
 		this.owner = owner;
 		this.credit = credit;
 		this.number = number;
+		this.dni = dni;
 		this.password = password;
 	}
 
@@ -53,6 +56,10 @@ public class Account {
 	@Override
 	public String toString() {
 		return "Owner: " + this.owner + ", Account Number: " + this.number + ", Credit: " + this.credit;
+	}
+
+	public String getDni() {
+		return dni;
 	}
 
 }
