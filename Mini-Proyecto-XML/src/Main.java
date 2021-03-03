@@ -1,6 +1,4 @@
-import java.util.Arrays;
 import java.util.Scanner;
-
 import datatypes.Account;
 import handlers.DataGenerator;
 
@@ -61,6 +59,7 @@ public class Main {
 					System.out.println("Error in credentials!");
 				}
 				break;
+				
 			case 2:
 				System.out.println("Please enter manager password: ");
 				if (dataGenerator.loginManager(in.next())) {
@@ -93,11 +92,12 @@ public class Main {
 								}
 							}
 							break;
+							
 						case 2:
 							String[] options = { "[1] -> Get accounts with credit greather than ",
 									"[2] -> Get account data by account number", "[3] -> Get accounts by owner id",
 									"[4] -> Get accounts with credit less than " };
-							System.out.println("Please choose a predefined query to execute: ");
+							System.out.println("\n\nPlease choose a predefined query to execute: ");
 							for (String option : options) {
 								System.out.println(option);
 							}
@@ -109,6 +109,7 @@ public class Main {
 										dataGenerator.executeQuery("for $x in /bank/accounts/account where $x/credit > "
 												+ in.next() + " return $x"));
 								break;
+								
 							case 2:
 								in.nextLine();
 								System.out.println("Insert the value: ");
@@ -116,26 +117,33 @@ public class Main {
 										"for $x in /bank/accounts/account where $x/@number = '" + in.next()
 												+ "' return concat('owner: ', $x/owner, ' credit: ', $x/credit)"));
 								break;
+								
 							case 3:
 								in.nextLine();
 								System.out.println("Insert the value: ");
 								System.out.println(dataGenerator
-										.executeQuery("/bank/accounts/account[owner = '" + in.next() + "']"));
+										.executeQuery("for $x in /bank/accounts/account where $x/owner/@dni = '"
+												+ in.next() + "' return $x"));
 								break;
+								
 							case 4:
 								in.nextLine();
 								System.out.println("Insert the value: ");
-								System.out.println(dataGenerator.executeQuery(""));
+								System.out.println(
+										dataGenerator.executeQuery("for $x in /bank/accounts/account where $x/credit < "
+												+ in.next() + " return $x"));
 								break;
 							default:
-
+								System.out.println("No valid option recieved");
 								break;
 							}
 							break;
+							
 						case 3:
 							exitUser = !exitUser;
 							System.err.println("\n\n\n\n");
 							break;
+							
 						default:
 							System.err.println("Choose a valid option!");
 							break;
@@ -145,11 +153,13 @@ public class Main {
 					System.out.println("Incorrect credentials");
 				}
 				break;
+				
 			case 3:
 				exit = !exit;
 				in.close();
 				dataGenerator.closeSession();
 				break;
+				
 			default:
 				System.err.println("Choose a valid option!");
 			}
