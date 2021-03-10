@@ -7,7 +7,7 @@ export const postRouter = express.Router({
   strict: true,
 });
 
-postRouter.post("/", (req: Request, res: Response) => {
+postRouter.post("/:username", (req: Request, res: Response) => {
   postController.create(req, res);
 });
 
