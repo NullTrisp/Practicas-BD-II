@@ -1,6 +1,5 @@
 <template>
-  <v-card id="container" max-width="600">
-    <v-card-title> Login </v-card-title>
+  <cardComponent title="Login">
     <v-card-text>
       <v-text-field label="Username" v-model="username"></v-text-field>
       <v-text-field
@@ -21,12 +20,16 @@
         <v-col></v-col>
       </v-row>
     </v-card-actions>
-  </v-card>
+  </cardComponent>
 </template>
 
 <script>
+import cardComponent from "@/components/CardComponent.vue";
 import axios from "axios";
 export default {
+  components: {
+    cardComponent,
+  },
   data() {
     return {
       username: "",
@@ -40,7 +43,8 @@ export default {
           username: this.username,
           password: this.password,
         })
-        .then(() => {
+        .then((res) => {
+          this.$store.commit("login", res.data.username);
           this.$router.push({ name: "Homepage" });
         })
         .catch((err) => {

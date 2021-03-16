@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-row>
+    <v-row class="header">
       <v-col></v-col>
       <v-col>
         <cardLoginComponent

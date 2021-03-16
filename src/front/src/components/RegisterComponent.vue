@@ -1,6 +1,5 @@
 <template>
-  <v-card id="container" max-width="600">
-    <v-card-title> Register </v-card-title>
+  <cardComponent title="Register">
     <v-card-text>
       <v-form ref="form">
         <v-text-field label="Name" v-model="name"></v-text-field>
@@ -22,12 +21,16 @@
         <v-col></v-col>
       </v-row>
     </v-card-actions>
-  </v-card>
+  </cardComponent>
 </template>
 
 <script>
+import cardComponent from "@/components/CardComponent.vue";
 import axios from "axios";
 export default {
+  components: {
+    cardComponent,
+  },
   data() {
     return {
       name: "",
@@ -46,6 +49,7 @@ export default {
           username: this.username,
           password: this.password,
           age: this.age,
+          isAdmin: false,
         })
         .then(() => {
           this.$refs.form.reset();

@@ -11,6 +11,7 @@ export default {
     icon: String,
     content: String,
     color: String,
+    type: String,
   },
 };
 </script>

@@ -11,7 +11,7 @@ postRouter.post("/:username", (req: Request, res: Response) => {
   postController.create(req, res);
 });
 
-postRouter.get("/:username/posts", (req: Request, res: Response) => {
+postRouter.get("/:username", (req: Request, res: Response) => {
   postController.readAll(req, res);
 });
 
@@ -23,6 +23,6 @@ postRouter.put("/:username", (req: Request, res: Response) => {
   postController.update(req, res);
 });
 
-postRouter.delete("/:username", (req: Request, res: Response) => {
+postRouter.delete("/:username/:title", (req: Request, res: Response) => {
   postController.delete(req, res);
 });
