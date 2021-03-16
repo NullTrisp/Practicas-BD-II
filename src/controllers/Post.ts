@@ -35,13 +35,13 @@ export class PostController {
     req: Request<import("express-serve-static-core").ParamsDictionary>,
     res: Response
   ): void {
-    UserModel.find({}, (err, users) => {
-      err
-        ? res.status(500).send(err)
-        : users.length > 0
-        ? res.status(200).send(users)
-        : res.sendStatus(404);
-    });
+    UserModel.findOne({ username: req.params.username })
+      .then((user: any) => {
+        user ? res.status(200).send(user.posts) : res.sendStatus(404);
+      })
+      .catch((err: any) => {
+        res.status(500).send(err);
+      });
   }
 
   public update(

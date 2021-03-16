@@ -10,11 +10,25 @@ export class UserController {
       name: req.body.name,
       last_name: req.body.last_name,
       username: req.body.username,
+      password: req.body.password,
       age: req.body.age,
     });
     newUser.save((err: any) => {
       err ? res.status(500).send(err.message) : res.sendStatus(201);
     });
+  }
+
+  public login(
+    req: Request<import("express-serve-static-core").ParamsDictionary>,
+    res: Response
+  ): void {
+    UserModel.findOne({ username: req.body.username, password: req.body.password })
+      .then((user: any) => {
+        user ? res.status(200).send({ username: user.username, last_name: user.last_name, name: user.name, posts: user.posts }) : res.sendStatus(404);
+      })
+      .catch((err: any) => {
+        res.status(500).send(err);
+      });
   }
 
   public read(
@@ -38,8 +52,8 @@ export class UserController {
       err
         ? res.status(500).send(err)
         : users.length > 0
-        ? res.status(200).send(users)
-        : res.sendStatus(404);
+          ? res.status(200).send(users)
+          : res.sendStatus(404);
     });
   }
 

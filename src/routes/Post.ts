@@ -11,7 +11,7 @@ postRouter.post("/:username", (req: Request, res: Response) => {
   postController.create(req, res);
 });
 
-postRouter.get("/", (req: Request, res: Response) => {
+postRouter.get("/:username/posts", (req: Request, res: Response) => {
   postController.readAll(req, res);
 });
 

@@ -11,13 +11,17 @@ userRouter.post("/", (req: Request, res: Response) => {
   userController.create(req, res);
 });
 
+userRouter.post("/login", (req: Request, res: Response) => {
+  userController.login(req, res);
+});
+
 userRouter.get("/", (req: Request, res: Response) => {
   userController.readAll(req, res);
 });
 
 userRouter.get("/:username", (req: Request, res: Response) => {
-    userController.read(req, res);
-  });
+  userController.read(req, res);
+});
 
 userRouter.put("/:username", (req: Request, res: Response) => {
   userController.update(req, res);
