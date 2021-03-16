@@ -16,7 +16,7 @@
         <v-col></v-col>
       </v-row>
       <v-row>
-        <v-col> <a href="/#/register">Register</a> </v-col>
+        <v-col> <a @click="registerView">Register</a> </v-col>
         <v-col></v-col>
         <v-col></v-col>
       </v-row>
@@ -46,6 +46,9 @@ export default {
         .catch((err) => {
           console.error(err);
         });
+    },
+    registerView() {
+      this.$emit("changeView");
     },
   },
 };

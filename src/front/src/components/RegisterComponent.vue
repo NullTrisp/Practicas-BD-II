@@ -2,19 +2,22 @@
   <v-card id="container" max-width="600">
     <v-card-title> Register </v-card-title>
     <v-card-text>
-      <v-text-field label="Name" v-model="name"></v-text-field>
-      <v-text-field label="Last Name" v-model="last_name"></v-text-field>
-      <v-text-field label="Username" v-model="username"></v-text-field>
-      <v-text-field
-        label="Password"
-        type="password"
-        v-model="password"
-      ></v-text-field>
-      <v-text-field label="Age" v-model="age" type="number"></v-text-field>
+      <v-form ref="form">
+        <v-text-field label="Name" v-model="name"></v-text-field>
+        <v-text-field label="Last Name" v-model="last_name"></v-text-field>
+        <v-text-field label="Username" v-model="username"></v-text-field>
+        <v-text-field
+          label="Password"
+          type="password"
+          v-model="password"
+        ></v-text-field>
+        <v-text-field label="Age" v-model="age" type="number"></v-text-field>
+      </v-form>
     </v-card-text>
     <v-card-actions>
       <v-row>
         <v-col></v-col>
+        <v-col><v-btn @click="goBack"> Go back </v-btn></v-col>
         <v-col><v-btn @click="login"> Submit </v-btn></v-col>
         <v-col></v-col>
       </v-row>
@@ -45,11 +48,15 @@ export default {
           age: this.age,
         })
         .then(() => {
+          this.$refs.form.reset();
           alert("User created!");
         })
         .catch((err) => {
           console.error(err);
         });
+    },
+    goBack() {
+      this.$emit("changeView");
     },
   },
 };
@@ -58,5 +65,16 @@ export default {
 <style>
 .container {
   border-radius: 2em;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 </style>

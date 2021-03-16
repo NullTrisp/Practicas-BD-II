@@ -20,7 +20,7 @@ class Server {
 
   private config(): void {
     this.app.use(cors({
-      origin: 'http://localhost:8080'
+      origin: 'http://localhost:8084'
     }));
     this.app.use(express.json());
     mongoose.connect("mongodb://localhost:27017/testDB", {
