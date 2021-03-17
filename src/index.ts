@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { userRouter } from "./routes/User";
 import { postRouter } from "./routes/Post";
+import { friendsRouter } from "./routes/Friends";
 
 class Server {
   private app: express.Application;
@@ -16,12 +17,15 @@ class Server {
   private routes(): void {
     this.app.use("/user", userRouter);
     this.app.use("/post", postRouter);
+    this.app.use("/friends", friendsRouter);
   }
 
   private config(): void {
-    this.app.use(cors({
-      origin: 'http://localhost:8080'
-    }));
+    this.app.use(
+      cors({
+        origin: "http://localhost:8080",
+      })
+    );
     this.app.use(express.json());
     mongoose.connect("mongodb://localhost:27017/testDB", {
       useNewUrlParser: true,

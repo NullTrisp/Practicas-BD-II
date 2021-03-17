@@ -34,4 +34,7 @@ export const UserSchema = new mongoose.Schema({
   posts: {
     type: [PostSchema],
   },
+  friends: {
+    type: [String],
+  },
 });
