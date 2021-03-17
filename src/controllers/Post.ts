@@ -104,7 +104,7 @@ export class PostController {
             posts: userPosts,
           }
         );
-        res.send(200);
+        res.sendStatus(200);
       } else {
         res.sendStatus(404);
       }
