@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <NavBar />
     <v-row class="header">
       <v-col></v-col>
       <v-col>
@@ -44,6 +45,19 @@
         <v-icon>mdi-pen</v-icon>
         Add post
       </v-btn>
+      <v-btn class="ma-2" color="white" width="10em" @click="goToFollow">
+        <v-icon>mdi-account-group </v-icon>
+        Follow Users
+      </v-btn>
+      <v-btn
+        class="ma-2"
+        color="white"
+        width="10em"
+        v-if="this.$store.state.isAdmin"
+      >
+        <v-icon>mdi-desktop-mac-dashboard </v-icon>
+        Admin panel
+      </v-btn>
       <v-btn class="ma-2" color="white" width="10em" @click="logout">
         <v-icon>mdi-logout</v-icon>
         Logout
@@ -54,6 +68,7 @@
 
 <script>
 import cardComponent from "@/components/CardComponent.vue";
+import NavBar from "@/components/NavBar.vue";
 import Posts from "@/components/PostsIterator.vue";
 import axios from "axios";
 
@@ -69,21 +84,25 @@ export default {
   components: {
     Posts,
     cardComponent,
+    NavBar,
   },
   beforeMount() {
     this.$store.state.userInSession === ""
       ? this.$router.push({ name: "LandingPage" })
-      : axios
-          .get(`http://localhost:4000/post/${this.$store.state.userInSession}`)
-          .then((res) => {
-            this.posts = res.data;
-          })
-          .catch((err) => {
-            console.log(err);
-            alert("There has been a server error :(");
-          });
+      : this.getPosts();
   },
   methods: {
+    getPosts() {
+      axios
+        .get(`http://localhost:4000/post/${this.$store.state.userInSession}`)
+        .then((res) => {
+          this.posts = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("There has been a server error :(");
+        });
+    },
     logout() {
       this.$store.commit("logout");
       this.$router.push({ name: "LandingPage" });
@@ -108,6 +127,9 @@ export default {
     },
     goToProfile() {
       this.$router.push({ name: "UpdateProfile" });
+    },
+    goToFollow() {
+      this.$router.push({ name: "FollowUsers" });
     },
   },
 };

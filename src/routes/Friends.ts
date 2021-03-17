@@ -7,12 +7,16 @@ export const friendsRouter = express.Router({
   strict: true,
 });
 
-friendsRouter.post("/", (req: Request, res: Response) => {
+friendsRouter.post("/:username/add/:follow", (req: Request, res: Response) => {
   friendsController.add(req, res);
 });
 
-friendsRouter.get("/", (req: Request, res: Response) => {
-  friendsController.read(req, res);
+friendsRouter.get("/:username", (req: Request, res: Response) => {
+  friendsController.readFriends(req, res);
+});
+
+friendsRouter.get("/find/:username", (req: Request, res: Response) => {
+  friendsController.readToAdd(req, res);
 });
 
 friendsRouter.delete("/", (req: Request, res: Response) => {

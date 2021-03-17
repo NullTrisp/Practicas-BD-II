@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import LandingPage from "../views/LandingPage.vue";
 import Homepage from "../views/Homepage.vue";
 import UpdateProfile from "../views/UpdateProfile.vue";
+import FollowUsers from "../views/FollowUsers.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/profile",
     name: "UpdateProfile",
     component: UpdateProfile,
+  },
+  {
+    path: "/follow",
+    name: "FollowUsers",
+    component: FollowUsers,
   },
 ];
 

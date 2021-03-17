@@ -6,14 +6,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userInSession: ""
+    userInSession: "",
+    isAdmin: false
   },
   mutations: {
-    login(state, user) {
-      state.userInSession = user
+    login(state, userData) {
+      state.userInSession = userData.username,
+        state.isAdmin = userData.isAdmin
     },
     logout(state) {
-      state.userInSession = ""
+      state.userInSession = "",
+        state.isAdmin = false
     }
   },
   actions: {

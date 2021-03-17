@@ -50,7 +50,10 @@ export default {
         },
       })
         .then((res) => {
-          this.$store.commit("login", res.data.username);
+          this.$store.commit("login", {
+            username: res.data.username,
+            isAdmin: res.data.isAdmin,
+          });
           this.$router.push({ name: "Homepage" });
         })
         .catch((err) => {

@@ -17,7 +17,7 @@ class Server {
   private routes(): void {
     this.app.use("/user", userRouter);
     this.app.use("/post", postRouter);
-    this.app.use("/friends", friendsRouter);
+    this.app.use("/friend", friendsRouter);
   }
 
   private config(): void {
