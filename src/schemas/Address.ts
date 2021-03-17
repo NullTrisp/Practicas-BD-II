@@ -1,19 +1,20 @@
 import mongoose from "mongoose";
 
-export const PostSchema = new mongoose.Schema({
-  hash: {
-    type: String,
-    required: true,
-    index: {
-      unique: true,
-    },
-  },
-  title: {
+export const AddressSchema = new mongoose.Schema({
+  street: {
     type: String,
     required: true,
   },
-  content: {
+  city: {
     type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  zip: {
+    type: Number,
     required: true,
   },
 });

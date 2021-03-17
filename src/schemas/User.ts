@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { AddressSchema } from "./Address";
 import { PostSchema } from "./Post";
 
 export const UserSchema = new mongoose.Schema({
@@ -26,6 +27,9 @@ export const UserSchema = new mongoose.Schema({
   isAdmin: {
     type: Boolean,
     required: true,
+  },
+  address: {
+    type: AddressSchema,
   },
   posts: {
     type: [PostSchema],

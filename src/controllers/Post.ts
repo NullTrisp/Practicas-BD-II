@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { PostModel } from "../models/Post";
 import { UserModel } from "../models/User";
 
-function stringToHash(string: string) {
-  var hash = 0;
+function stringToHash(string: string): string {
+  let hash = 0;
 
-  if (string.length == 0) return hash;
+  if (string.length == 0) return hash.toString();
 
   for (let i: number = 0; i < string.length; i++) {
     let char = string.charCodeAt(i);
@@ -13,96 +13,130 @@ function stringToHash(string: string) {
     hash = hash & hash;
   }
 
-  return hash;
+  return hash.toString();
 }
 
 export class PostController {
-  public create(
+  public async create(
     req: Request<import("express-serve-static-core").ParamsDictionary>,
     res: Response
-  ): void {
-    UserModel.findOne({ username: req.params.username })
-      .then((user: any) => {
-        let posts: Array<object> = user.posts;
-        posts.push(
+  ): Promise<void> {
+    try {
+      const user: any = await UserModel.findOne({
+        username: req.params.username,
+      });
+      if (user) {
+        user.posts.push(
           new PostModel({
-            hash: stringToHash(req.body.title),
+            hash:
+              stringToHash(req.params.username) +
+              "_" +
+              stringToHash(req.body.title) +
+              "_" +
+              Date.now(),
             ...req.body,
           })
         );
-        UserModel.updateOne(
+        await UserModel.updateOne(
           { username: req.params.username },
           {
-            posts: posts,
+            posts: user.posts,
           }
-        )
-          .then(() => {
-            res.sendStatus(200);
-          })
-          .catch((err: any) => {
-            res.status(500).send(err);
-          });
-      })
-      .catch((err: any) => {
-        res.status(500).send(err);
-      });
-  }
-
-  public read(
-    req: Request<import("express-serve-static-core").ParamsDictionary>,
-    res: Response
-  ): void {
-    throw new Error("Not implemented");
-  }
-
-  public readAll(
-    req: Request<import("express-serve-static-core").ParamsDictionary>,
-    res: Response
-  ): void {
-    UserModel.findOne({ username: req.params.username })
-      .then((user: any) => {
-        user ? res.status(200).send(user.posts) : res.sendStatus(404);
-      })
-      .catch((err: any) => {
-        res.status(500).send(err);
-      });
-  }
-
-  public update(
-    req: Request<import("express-serve-static-core").ParamsDictionary>,
-    res: Response
-  ): void {
-    throw new Error("Not implemented");
-  }
-
-  public delete(
-    req: Request<import("express-serve-static-core").ParamsDictionary>,
-    res: Response
-  ): void {
-    UserModel.findOne({ username: req.params.username })
-      .then((user: any) => {
-        console.log(stringToHash(req.params.title));
-
-        let posts: Array<object> = user.posts;
-        const index = user.posts.findIndex(
-          (x: any) => x.hash === stringToHash(req.params.title)
         );
-        if (index !== undefined) posts.splice(index, 1);
-        UserModel.updateOne(
+        res.sendStatus(201);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+
+  public async read(
+    req: Request<import("express-serve-static-core").ParamsDictionary>,
+    res: Response
+  ): Promise<void> {
+    try {
+      const user: any = await UserModel.findOne({
+        username: req.params.username,
+      });
+      const userPosts: object[] = user.posts;
+      const i = userPosts.findIndex((x: any) => x.hash === req.params.hash);
+      i > -1 ? res.status(200).send(userPosts[i]) : res.sendStatus(404);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+
+  public async readAll(
+    req: Request<import("express-serve-static-core").ParamsDictionary>,
+    res: Response
+  ): Promise<void> {
+    try {
+      const user: any = await UserModel.findOne({
+        username: req.params.username,
+      });
+      user ? res.status(200).send(user.posts) : res.sendStatus(404);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+
+  public async update(
+    req: Request<import("express-serve-static-core").ParamsDictionary>,
+    res: Response
+  ): Promise<void> {
+    try {
+      const user: any = await UserModel.findOne({
+        username: req.params.username,
+      });
+      const userPosts: object[] = user.posts;
+      const i = userPosts.findIndex((x: any) => x.hash === req.params.hash);
+      if (i > -1) {
+        userPosts[i] = {
+          hash: req.params.hash,
+          title: req.body.title,
+          content: req.body.content,
+        };
+        await UserModel.updateOne(
           { username: req.params.username },
           {
-            posts: posts,
+            posts: userPosts,
           }
-        )
-          .then(() => {
-            res.sendStatus(200);
-          })
-          .catch((err: any) => {
-            res.status(500).send(err);
-          });
-      })
-      .catch((err: any) => {
-        res.status(500).send(err);
+        );
+        res.send(200);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+
+  public async delete(
+    req: Request<import("express-serve-static-core").ParamsDictionary>,
+    res: Response
+  ): Promise<void> {
+    try {
+      const user: any = await UserModel.findOne({
+        username: req.params.username,
       });
+      const userPosts: object[] = user.posts;
+      const i = userPosts.findIndex((x: any) => x.hash === req.params.hash);
+      if (i > -1) {
+        userPosts.splice(i, 1);
+        await UserModel.updateOne(
+          { username: req.params.username },
+          {
+            posts: userPosts,
+          }
+        );
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
   }
 }

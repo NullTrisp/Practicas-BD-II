@@ -38,17 +38,25 @@ export default {
   },
   methods: {
     login() {
-      axios
-        .post("http://localhost:4000/user/login", {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/user/login",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
           username: this.username,
           password: this.password,
-        })
+        },
+      })
         .then((res) => {
           this.$store.commit("login", res.data.username);
           this.$router.push({ name: "Homepage" });
         })
         .catch((err) => {
-          console.error(err);
+          err.response.status === 404
+            ? alert("Error in credentials!")
+            : alert("Server error! :(");
         });
     },
     registerView() {

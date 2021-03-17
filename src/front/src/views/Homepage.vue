@@ -2,16 +2,44 @@
   <v-app>
     <v-row class="header">
       <v-col></v-col>
-      <v-col><Posts v-if="posts.length > 0" :postsRecieved="posts" /> </v-col>
+      <v-col>
+        <Posts
+          v-if="posts.length > 0 && !createPostView"
+          :postsRecieved="posts"
+        />
+        <cardComponent v-if="createPostView" title="Create Post">
+          <v-card-text>
+            <v-text-field label="Title" v-model="postTitle"></v-text-field>
+            <v-text-field label="Content" v-model="postContent"></v-text-field>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              class="ma-2"
+              color="white"
+              width="10em"
+              @click="createPostView = false"
+            >
+              Cancel
+            </v-btn>
+            <v-btn class="ma-2" color="white" width="10em" @click="createPost">
+              Create
+            </v-btn>
+          </v-card-actions>
+        </cardComponent>
+      </v-col>
       <v-col></v-col>
     </v-row>
     <div class="text-center">
-      <BtnComponent icon="account" content="Edit profile" color="secondary" />
+      <v-btn class="ma-2" color="white" width="10em" @click="goToProfile">
+        <v-icon>mdi-account</v-icon>
+        Edit Profile
+      </v-btn>
       <v-btn
         class="ma-2"
         color="white"
         width="10em"
         @click="createPostView = true"
+        v-if="!createPostView"
       >
         <v-icon>mdi-pen</v-icon>
         Add post
@@ -20,27 +48,12 @@
         <v-icon>mdi-logout</v-icon>
         Logout
       </v-btn>
-      <v-dialog v-model="createPostView" width="700">
-        <cardComponent title="Create post">
-          <v-text-field label="Title" type="text" v-model="postTitle" />
-          <v-text-field label="Content" type="textarea" v-model="postContent" />
-          <v-row>
-            <v-col></v-col>
-            <v-col
-              ><v-btn @click="createPostView = false"> Close </v-btn></v-col
-            >
-            <v-col><v-btn @click="createPost"> Create </v-btn></v-col>
-            <v-col></v-col>
-          </v-row>
-        </cardComponent>
-      </v-dialog>
     </div>
   </v-app>
 </template>
 
 <script>
 import cardComponent from "@/components/CardComponent.vue";
-import BtnComponent from "@/components/BtnComponent.vue";
 import Posts from "@/components/PostsIterator.vue";
 import axios from "axios";
 
@@ -55,7 +68,6 @@ export default {
   },
   components: {
     Posts,
-    BtnComponent,
     cardComponent,
   },
   beforeMount() {
@@ -77,11 +89,14 @@ export default {
       this.$router.push({ name: "LandingPage" });
     },
     createPost() {
-      axios
-        .post(`http://localhost:4000/post/${this.$store.state.userInSession}`, {
-          title: this.postTitle,
-          content: this.postContent,
-        })
+      axios({
+        method: "post",
+        url: `http://localhost:4000/post/${this.$store.state.userInSession}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: { title: this.postTitle, content: this.postContent },
+      })
         .then(() => {
           alert("Post created");
           this.$router.go();
@@ -90,6 +105,9 @@ export default {
           console.log(err);
           alert("There has been a server error :(");
         });
+    },
+    goToProfile() {
+      this.$router.push({ name: "UpdateProfile" });
     },
   },
 };

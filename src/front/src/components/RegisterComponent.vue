@@ -11,6 +11,11 @@
           v-model="password"
         ></v-text-field>
         <v-text-field label="Age" v-model="age" type="number"></v-text-field>
+        <v-text-field label="Street" v-model="street"></v-text-field>
+        <v-text-field label="City" v-model="city"></v-text-field>
+        <v-text-field label="State" v-model="state"></v-text-field>
+        <v-text-field label="Zip" v-model="zip" type="number"></v-text-field>
+        <v-checkbox v-model="isAdmin" :label="`Admin`"></v-checkbox>
       </v-form>
     </v-card-text>
     <v-card-actions>
@@ -38,19 +43,37 @@ export default {
       username: "",
       password: "",
       age: 0,
+      isAdmin: false,
+      street: "",
+      city: "",
+      state: "",
+      zip: 0,
     };
   },
   methods: {
     login() {
-      axios
-        .post("http://localhost:4000/user", {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/user",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
           name: this.name,
           last_name: this.last_name,
           username: this.username,
           password: this.password,
           age: this.age,
-          isAdmin: false,
-        })
+          isAdmin: this.isAdmin,
+          address: {
+            street: this.street,
+            city: this.city,
+            state: this.state,
+            zip: this.zip,
+          },
+          posts: [],
+        },
+      })
         .then(() => {
           this.$refs.form.reset();
           alert("User created!");

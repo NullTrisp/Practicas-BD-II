@@ -15,14 +15,14 @@ postRouter.get("/:username", (req: Request, res: Response) => {
   postController.readAll(req, res);
 });
 
-postRouter.get("/:username/:title", (req: Request, res: Response) => {
+postRouter.get("/:username/:hash", (req: Request, res: Response) => {
   postController.read(req, res);
 });
 
-postRouter.put("/:username", (req: Request, res: Response) => {
+postRouter.put("/:username/:hash", (req: Request, res: Response) => {
   postController.update(req, res);
 });
 
-postRouter.delete("/:username/:title", (req: Request, res: Response) => {
+postRouter.delete("/:username/:hash", (req: Request, res: Response) => {
   postController.delete(req, res);
 });
