@@ -19,6 +19,6 @@ friendsRouter.get("/find/:username", (req: Request, res: Response) => {
   friendsController.readToAdd(req, res);
 });
 
-friendsRouter.delete("/", (req: Request, res: Response) => {
+friendsRouter.delete("/:username/delete/:user", (req: Request, res: Response) => {
   friendsController.delete(req, res);
 });

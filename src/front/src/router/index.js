@@ -4,6 +4,8 @@ import LandingPage from "../views/LandingPage.vue";
 import Homepage from "../views/Homepage.vue";
 import UpdateProfile from "../views/UpdateProfile.vue";
 import FollowUsers from "../views/FollowUsers.vue";
+import UsersFollowed from "../views/UsersFollowed.vue";
+import AdminDashboard from "../views/AdminDashboard.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +29,16 @@ const routes = [
     path: "/follow",
     name: "FollowUsers",
     component: FollowUsers,
+  },
+  {
+    path: "/followed",
+    name: "UsersFollowed",
+    component: UsersFollowed,
+  },
+  {
+    path: "/admin",
+    name: "AdminDashboard",
+    component: AdminDashboard,
   },
 ];
 

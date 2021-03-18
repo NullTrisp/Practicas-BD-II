@@ -2,7 +2,11 @@
   <v-app>
     <v-row class="header">
       <v-col></v-col>
-      <v-col></v-col>
+      <v-col>
+        <v-btn @click="goBack">
+          Go back
+        </v-btn>
+      </v-col>
       <v-col
         ><v-card
           v-for="user in users"
@@ -75,9 +79,11 @@ export default {
           console.log(err);
         });
     },
+    goBack() {
+      this.$router.push({ name: "Homepage" });
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

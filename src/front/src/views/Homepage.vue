@@ -1,7 +1,71 @@
 <template>
   <v-app>
-    <NavBar />
     <v-row class="header">
+      <v-navigation-drawer absolute permanent right>
+        <template v-slot:prepend>
+          <v-list-item two-line>
+            <v-list-item-content>
+              <v-list-item-title>{{ user }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+        <v-divider></v-divider>
+        <v-list dense>
+          <v-list-item @click="goToProfile">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Edit profile</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item @click="createPostView = true">
+            <v-list-item-icon>
+              <v-icon>mdi-pen</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Add post</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item @click="goToFollow">
+            <v-list-item-icon>
+              <v-icon>mdi-account-multiple-plus</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Follow Users</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item @click="goToFollowed">
+            <v-list-item-icon>
+              <v-icon>mdi-account-group</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Users Followed</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item @click="goToAdmin">
+            <v-list-item-icon>
+              <v-icon>mdi-desktop-mac-dashboard</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Admin panel</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item @click="logout">
+            <v-list-item-icon>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
       <v-col></v-col>
       <v-col>
         <Posts
@@ -30,45 +94,11 @@
       </v-col>
       <v-col></v-col>
     </v-row>
-    <div class="text-center">
-      <v-btn class="ma-2" color="white" width="10em" @click="goToProfile">
-        <v-icon>mdi-account</v-icon>
-        Edit Profile
-      </v-btn>
-      <v-btn
-        class="ma-2"
-        color="white"
-        width="10em"
-        @click="createPostView = true"
-        v-if="!createPostView"
-      >
-        <v-icon>mdi-pen</v-icon>
-        Add post
-      </v-btn>
-      <v-btn class="ma-2" color="white" width="10em" @click="goToFollow">
-        <v-icon>mdi-account-group </v-icon>
-        Follow Users
-      </v-btn>
-      <v-btn
-        class="ma-2"
-        color="white"
-        width="10em"
-        v-if="this.$store.state.isAdmin"
-      >
-        <v-icon>mdi-desktop-mac-dashboard </v-icon>
-        Admin panel
-      </v-btn>
-      <v-btn class="ma-2" color="white" width="10em" @click="logout">
-        <v-icon>mdi-logout</v-icon>
-        Logout
-      </v-btn>
-    </div>
   </v-app>
 </template>
 
 <script>
 import cardComponent from "@/components/CardComponent.vue";
-import NavBar from "@/components/NavBar.vue";
 import Posts from "@/components/PostsIterator.vue";
 import axios from "axios";
 
@@ -79,12 +109,12 @@ export default {
       createPostView: false,
       postTitle: "",
       postContent: "",
+      user: this.$store.state.userInSession,
     };
   },
   components: {
     Posts,
     cardComponent,
-    NavBar,
   },
   beforeMount() {
     this.$store.state.userInSession === ""
@@ -130,6 +160,12 @@ export default {
     },
     goToFollow() {
       this.$router.push({ name: "FollowUsers" });
+    },
+    goToFollowed() {
+      this.$router.push({ name: "UsersFollowed" });
+    },
+    goToAdmin() {
+      this.$router.push({ name: "AdminDashboard" });
     },
   },
 };

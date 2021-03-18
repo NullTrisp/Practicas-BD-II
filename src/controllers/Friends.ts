@@ -75,5 +75,30 @@ export class FriendsController {
   public async delete(
     req: Request<import("express-serve-static-core").ParamsDictionary>,
     res: Response
-  ): Promise<void> {}
+  ): Promise<void> {
+    try {
+      const user: any = await UserModel.findOne({
+        username: req.params.username,
+      });
+
+      const userToUnfollow: any = await UserModel.findOne({
+        username: req.params.user,
+      });
+
+      if (user && userToUnfollow) {
+        user.friends.splice(user.friends.indexOf(userToUnfollow.username), 1);
+        await UserModel.updateOne(
+          { username: req.params.username },
+          {
+            friends: user.friends,
+          }
+        );
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
 }

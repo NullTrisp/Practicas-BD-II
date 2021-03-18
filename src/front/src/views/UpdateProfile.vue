@@ -79,7 +79,6 @@ export default {
     })
       .then((res) => {
         this.user = res.data;
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
