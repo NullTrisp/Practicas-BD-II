@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { userRouter } from "./routes/User";
 import { postRouter } from "./routes/Post";
 import { friendsRouter } from "./routes/Friends";
+import { analyticsRouter } from "./routes/Analytics";
 
 class Server {
   private app: express.Application;
@@ -18,6 +19,7 @@ class Server {
     this.app.use("/user", userRouter);
     this.app.use("/post", postRouter);
     this.app.use("/friend", friendsRouter);
+    this.app.use("/analytics", analyticsRouter);
   }
 
   private config(): void {
