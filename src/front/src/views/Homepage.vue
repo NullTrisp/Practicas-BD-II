@@ -129,8 +129,9 @@ export default {
           this.posts = res.data;
         })
         .catch((err) => {
-          console.log(err);
-          alert("There has been a server error :(");
+          err.response.status === 404
+            ? alert("User has no posts")
+            : alert("There has been a server error :(");
         });
     },
     logout() {

@@ -4,6 +4,7 @@
       <v-card class="cardIterator" v-for="(post, i) in posts" :key="i">
         <v-card-title> {{ post.title }} </v-card-title>
         <v-card-text> {{ post.content }}</v-card-text>
+        <v-card-text> Date: {{ post.created_at }}</v-card-text>
         <v-btn
           class="ma-2"
           color="blue"

@@ -3,7 +3,8 @@
     <v-row class="header">
       <v-col></v-col>
       <v-col>
-        <v-btn @click="goBack">
+        <v-btn @click="goBack" v-if="!postsView"> Go back </v-btn>
+        <v-btn @click="postsView = !postsView" v-if="postsView">
           Go back
         </v-btn>
       </v-col>
