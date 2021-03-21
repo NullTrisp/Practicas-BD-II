@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { PostModel } from "../models/Post";
 import { UserModel } from "../models/User";
 
-function stringToHash(string: string): string {
+export function stringToHash(string: string): string {
   let hash = 0;
 
   if (string.length == 0) return hash.toString();
@@ -22,27 +22,22 @@ export class PostController {
     res: Response
   ): Promise<void> {
     try {
-      const user: any = await UserModel.findOne({
-        username: req.params.username,
-      });
-      if (user) {
-        user.posts.push(
-          new PostModel({
-            hash:
-              stringToHash(req.params.username) +
-              "_" +
-              stringToHash(req.body.title) +
-              "_" +
-              Date.now(),
-            ...req.body,
-          })
-        );
-        await UserModel.updateOne(
-          { username: req.params.username },
-          {
-            posts: user.posts,
-          }
-        );
+      if (
+        await UserModel.findOne({
+          username: req.params.username,
+        })
+      ) {
+        await new PostModel({
+          username: req.params.username,
+          hash:
+            stringToHash(req.params.username) +
+            "_" +
+            stringToHash(req.body.title) +
+            "_" +
+            Date.now(),
+          ...req.body,
+          created_at: Date.now(),
+        }).save();
         res.sendStatus(201);
       } else {
         res.sendStatus(404);
@@ -73,10 +68,9 @@ export class PostController {
     res: Response
   ): Promise<void> {
     try {
-      const user: any = await UserModel.findOne({
-        username: req.params.username,
-      });
-      user ? res.status(200).send(user.posts) : res.sendStatus(404);
+      const posts = await PostModel.find({ username: req.params.username });
+
+      posts.length > 0 ? res.status(200).send(posts) : res.sendStatus(404);
     } catch (err) {
       res.status(500).send(err);
     }
@@ -87,27 +81,17 @@ export class PostController {
     res: Response
   ): Promise<void> {
     try {
-      const user: any = await UserModel.findOne({
-        username: req.params.username,
-      });
-      const userPosts: object[] = user.posts;
-      const i = userPosts.findIndex((x: any) => x.hash === req.params.hash);
-      if (i > -1) {
-        userPosts[i] = {
+      const post = await PostModel.findOneAndUpdate(
+        {
+          username: req.params.username,
           hash: req.params.hash,
+        },
+        {
           title: req.body.title,
           content: req.body.content,
-        };
-        await UserModel.updateOne(
-          { username: req.params.username },
-          {
-            posts: userPosts,
-          }
-        );
-        res.sendStatus(200);
-      } else {
-        res.sendStatus(404);
-      }
+        }
+      );
+      post ? res.sendStatus(200) : res.sendStatus(404);
     } catch (err) {
       res.status(500).send(err);
     }
@@ -118,23 +102,11 @@ export class PostController {
     res: Response
   ): Promise<void> {
     try {
-      const user: any = await UserModel.findOne({
+      const post = await PostModel.findOneAndDelete({
         username: req.params.username,
+        hash: req.params.hash,
       });
-      const userPosts: object[] = user.posts;
-      const i = userPosts.findIndex((x: any) => x.hash === req.params.hash);
-      if (i > -1) {
-        userPosts.splice(i, 1);
-        await UserModel.updateOne(
-          { username: req.params.username },
-          {
-            posts: userPosts,
-          }
-        );
-        res.sendStatus(200);
-      } else {
-        res.sendStatus(404);
-      }
+      post ? res.sendStatus(200) : res.sendStatus(404);
     } catch (err) {
       res.status(500).send(err);
     }

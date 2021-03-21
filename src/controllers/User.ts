@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { AddressModel } from "../models/Adress";
 import { UserModel } from "../models/User";
 
 export class UserController {
@@ -10,6 +9,7 @@ export class UserController {
     try {
       await new UserModel({
         ...req.body,
+        isAdmin: req.body.isAdmin,
         address: req.body.address,
       }).save();
       res.sendStatus(201);
