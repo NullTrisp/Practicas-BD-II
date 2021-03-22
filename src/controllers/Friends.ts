@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import mongoose from "mongoose";
 import { UserModel } from "../models/User";
 
 export class FriendsController {

@@ -20,7 +20,6 @@
         <CardComponent title="Admin panel">
           <v-card-actions>
             <v-row>
-              <v-col></v-col>
               <v-col
                 ><v-btn
                   @click="
@@ -31,7 +30,6 @@
                   See users
                 </v-btn></v-col
               >
-              <v-col></v-col>
               <v-col
                 ><v-btn @click="seeAnalytics = !seeAnalytics">
                   See Analytics
@@ -59,8 +57,49 @@
         </div>
       </v-col>
       <v-col v-if="seeAnalytics">
-        <v-data-table :headers="headers" hide-default-footer :items="items">
-        </v-data-table>
+        <CardComponent title="Admin options">
+          <v-card-text>
+            <v-row>
+              <v-col
+                ><v-text-field
+                  v-model="age"
+                  label="Get Amount of posts per age"
+                  type="number"
+                ></v-text-field
+              ></v-col>
+              <v-col></v-col>
+              <v-col></v-col>
+              <v-col> <v-btn @click="getByAge">Go</v-btn> </v-col>
+            </v-row>
+
+            <h3>Get amount of posts per age range:</h3>
+            <v-row>
+              <v-col
+                ><v-text-field label="From" type="number" v-bind="ageInit">
+                </v-text-field
+              ></v-col>
+              <v-col
+                ><v-text-field label="To" type="number" v-bind="ageEnd">
+                </v-text-field
+              ></v-col>
+              <v-col></v-col>
+              <v-col><v-btn @click="getByAgeRange">Go</v-btn></v-col>
+            </v-row>
+
+            <h3>Get amount of posts per date range:</h3>
+            <v-row>
+              <v-col
+                ><v-text-field label="From" type="date"> </v-text-field
+              ></v-col>
+              <v-col></v-col>
+              <v-col
+                ><v-text-field label="To" type="date"> </v-text-field
+              ></v-col>
+              <v-col></v-col>
+              <v-col><v-btn @click="getByDateRange">Go</v-btn></v-col>
+            </v-row>
+          </v-card-text>
+        </CardComponent>
       </v-col>
       <v-col></v-col>
       <v-col></v-col>
@@ -80,16 +119,11 @@ export default {
       seeUsers: false,
       seeAnalytics: false,
       users: [],
-      headers: [
-        {
-          text: "Name",
-          align: "start",
-          sortable: false,
-          value: "name",
-        },
-        { text: "Value", value: "value", sortable: false },
-      ],
-      items: [],
+      age: 0,
+      ageInit: 0,
+      ageEnd: 0,
+      dateInit: "",
+      dateEnd: "",
     };
   },
   methods: {
@@ -120,6 +154,33 @@ export default {
     },
     goBack() {
       this.$router.push({ name: "Homepage" });
+    },
+    getByAge() {
+      axios({
+        method: "get",
+        url: `http://localhost:4000/analytics/${this.age}`,
+        headers: {},
+      })
+        .then((res) => {
+          alert(`Result is: ${res.data[0].posts}`);
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    getByAgeRange() {
+      axios({
+        method: "get",
+        url: `http://localhost:4000/analytics/${this.ageInit}/${this.ageEnd}`,
+        headers: {},
+      })
+        .then((res) => {
+          console.log(res);
+          alert(res.data[0]?.posts || 0);
+        })
+        .catch((err) => {
+          alert(err);
+        });
     },
   },
 };
