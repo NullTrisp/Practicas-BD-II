@@ -13,16 +13,47 @@ export class AnalyticsController {
         { username: "$username", _id: false }
       );
 
-      const usernames: string[] = users.map((user: any) => user.username);
+      res.status(200).send(
+        await PostModel.aggregate([
+          {
+            $match: {
+              username: { $in: users.map((user: any) => user.username) },
+            },
+          },
+          { $count: "posts" },
+        ])
+      );
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
 
-      res
-        .status(200)
-        .send(
-          await PostModel.aggregate([
-            { $match: { username: { $in: usernames } } },
-            { $count: "posts" },
-          ])
-        );
+  public async aggregationDate(
+    req: Request<import("express-serve-static-core").ParamsDictionary>,
+    res: Response
+  ): Promise<void> {
+    try {
+      res.status(200).send(
+        await PostModel.aggregate([
+          {
+            $match: {
+              $and: [
+                {
+                  created_at: {
+                    $lte: new Date(req.params.dateInit),
+                  },
+                },
+                {
+                  created_at: {
+                    $gte: new Date(req.params.dateEnd),
+                  },
+                },
+              ],
+            },
+          },
+          { $count: "posts" },
+        ])
+      );
     } catch (err) {
       res.status(500).send(err);
     }

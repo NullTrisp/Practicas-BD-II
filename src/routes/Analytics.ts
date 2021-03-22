@@ -10,3 +10,7 @@ export const analyticsRouter = express.Router({
 analyticsRouter.get("/:age", (req: Request, res: Response) => {
   analyticsController.aggregationAge(req, res);
 });
+
+analyticsRouter.get("/:dateInit/:dateEnd", (req: Request, res: Response) => {
+  analyticsController.aggregationDate(req, res);
+});
