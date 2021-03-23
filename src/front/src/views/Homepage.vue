@@ -47,7 +47,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item @click="goToAdmin">
+          <v-list-item @click="goToAdmin" v-if="this.$store.state.isAdmin">
             <v-list-item-icon>
               <v-icon>mdi-desktop-mac-dashboard</v-icon>
             </v-list-item-icon>
