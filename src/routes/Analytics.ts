@@ -11,7 +11,7 @@ analyticsRouter.get("/:age", (req: Request, res: Response) => {
   analyticsController.aggregationAge(req, res);
 });
 
-analyticsRouter.get("/:ageInit/:ageEnd", (req: Request, res: Response) => {
+analyticsRouter.get("/age/:ageInit/:ageEnd", (req: Request, res: Response) => {
   analyticsController.aggregationAgeRange(req, res);
 });
 

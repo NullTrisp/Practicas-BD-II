@@ -57,7 +57,7 @@
         </div>
       </v-col>
       <v-col v-if="seeAnalytics">
-        <CardComponent title="Admin options">
+        <CardComponent title="Admin options" style="width:35em">
           <v-card-text>
             <v-row>
               <v-col
@@ -68,18 +68,17 @@
                 ></v-text-field
               ></v-col>
               <v-col></v-col>
-              <v-col></v-col>
               <v-col> <v-btn @click="getByAge">Go</v-btn> </v-col>
             </v-row>
 
             <h3>Get amount of posts per age range:</h3>
             <v-row>
               <v-col
-                ><v-text-field label="From" type="number" v-bind="ageInit">
+                ><v-text-field label="From" type="number" v-model="ageInit">
                 </v-text-field
               ></v-col>
               <v-col
-                ><v-text-field label="To" type="number" v-bind="ageEnd">
+                ><v-text-field label="To" type="number" v-model="ageEnd">
                 </v-text-field
               ></v-col>
               <v-col></v-col>
@@ -89,11 +88,13 @@
             <h3>Get amount of posts per date range:</h3>
             <v-row>
               <v-col
-                ><v-text-field label="From" type="date"> </v-text-field
+                ><v-text-field label="From" type="date" v-model="dateInit">
+                </v-text-field
               ></v-col>
               <v-col></v-col>
               <v-col
-                ><v-text-field label="To" type="date"> </v-text-field
+                ><v-text-field label="To" type="date" v-model="dateEnd">
+                </v-text-field
               ></v-col>
               <v-col></v-col>
               <v-col><v-btn @click="getByDateRange">Go</v-btn></v-col>
@@ -171,12 +172,24 @@ export default {
     getByAgeRange() {
       axios({
         method: "get",
-        url: `http://localhost:4000/analytics/${this.ageInit}/${this.ageEnd}`,
+        url: `http://localhost:4000/analytics/age/${this.ageInit}/${this.ageEnd}`,
         headers: {},
       })
         .then((res) => {
-          console.log(res);
-          alert(res.data[0]?.posts || 0);
+          alert(`Result is: ${res.data[0]?.posts || 0}`);
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    getByDateRange() {
+      axios({
+        method: "get",
+        url: `http://localhost:4000/analytics/${this.dateInit}/${this.dateEnd}`,
+        headers: {},
+      })
+        .then((res) => {
+          alert(`Result is: ${res.data[0].posts}`);
         })
         .catch((err) => {
           alert(err);
