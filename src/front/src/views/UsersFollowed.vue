@@ -18,7 +18,7 @@
           <v-card-title>
             <v-row>
               <v-col></v-col>
-              <v-col>{{ user.username }}</v-col>
+              <v-col md="5">{{ user.username }}</v-col>
               <v-col></v-col>
             </v-row>
             <v-row>

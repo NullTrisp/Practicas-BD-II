@@ -41,7 +41,7 @@
         </CardComponent>
       </v-col>
       <v-col v-if="seeUsers">
-        <div v-for="user in users" :key="user.username">
+        <div v-for="user in users" :key="user.username" style="width:20em; height: 8em">
           <v-card>
             <v-row>
               <v-col
